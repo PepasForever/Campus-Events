@@ -1,3 +1,8 @@
 <h1>{{ title() }}</h1>
 <p>Our app is alive.</p>
+<button (click)="clicks.set(clicks() + 1)">Clicked {{ clicks() }} times</button>
+<button (click)="clicks.set(clicks() * 0)">Reset Clicks</button>
+@if(clicks() > 5){
+    <p>Your Clicks are blowing UP!!!</p>
+}
 <router-outlet />
