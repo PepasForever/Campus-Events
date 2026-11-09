@@ -35,8 +35,24 @@ function validateEvent(body) {
   if (typeof body.title !== 'string' || body.title.trim().length < 3) {
     return 'title must have at least 3 characters';
   }
+  if (body.title.trim().length > 120) {
+    return 'title must have at most 120 characters';
+  }
   if (typeof body.date !== 'string' || Number.isNaN(Date.parse(body.date))) {
     return 'date must be a valid date, e.g. 2026-10-15T18:00';
+  }
+  if (Date.parse(body.date) <= Date.now()) {
+    return 'date must be in the future';
+  }
+  if (body.location !== undefined) {
+    if (typeof body.location !== 'string' || body.location.length > 100) {
+      return 'location must be a string with at most 100 characters';
+    }
+  }
+  if (body.description !== undefined) {
+    if (typeof body.description !== 'string' || body.description.length > 1000) {
+      return 'description must be a string with at most 1000 characters';
+    }
   }
   if (!Number.isInteger(body.capacity) || body.capacity < 1) {
     return 'capacity must be a whole number greater than 0';
@@ -57,9 +73,24 @@ function toEvent(id, body) {
 
 app.get('/api/events', (req, res) => {
   const q = String(req.query.q ?? '').toLowerCase();
-  const result = events
-    .filter((e) => e.title.toLowerCase().includes(q))
-    .sort((a, b) => a.date.localeCompare(b.date));
+  const from = req.query.from;
+  const sort = req.query.sort;
+
+  let result = events.filter((e) => e.title.toLowerCase().includes(q));
+
+  if (from !== undefined) {
+    if (Number.isNaN(Date.parse(from))) {
+      return res.status(400).json({ error: 'must be a valid date, e.g. 2026-11-01' });
+    }
+    result = result.filter((e) => Date.parse(e.date) >= Date.parse(from));
+  }
+
+  if (sort === 'title') {
+    result.sort((a, b) => a.title.localeCompare(b.title));
+  } else {
+    result.sort((a, b) => a.date.localeCompare(b.date));
+  }
+
   res.json(result);
 });
 
