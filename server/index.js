@@ -103,6 +103,27 @@ app.delete('/api/events/:id', (req, res) => {
   res.status(204).end();
 });
 
+app.get('/api/stats', (req, res) => {
+  const now = new Date();
+
+  const futureEvents = events
+    .filter((e) => new Date(e.date) > now)
+    .sort((a, b) => a.date.localeCompare(b.date));
+
+  let nextEvent;
+  if (futureEvents.length > 0) {
+    nextEvent = futureEvents[0];
+  } else {
+    nextEvent = null;
+  }
+
+  res.json({
+    count: events.length,
+    totalCapacity: events.reduce((sum, e) => sum + e.capacity, 0),
+    nextEvent: nextEvent,
+  });
+});
+
 app.listen(3000, () => {
   console.log('API running on http://localhost:3000');
 });

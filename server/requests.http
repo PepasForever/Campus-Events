@@ -40,3 +40,6 @@ Content-Type: application/json
 
 ### Delete event 4
 DELETE http://localhost:3000/api/events/4
+
+### Stats
+GET http://localhost:3000/api/stats
