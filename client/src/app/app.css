@@ -1,0 +1,14 @@
+header {
+  padding: 1rem 2rem;
+  background: #0a4a96;
+  color: white;
+}
+header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+main {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 1.5rem 2rem;
+}

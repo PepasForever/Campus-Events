@@ -1,0 +1,20 @@
+<input
+  type="search"
+  placeholder="Search events…"
+  [value]="search()"
+  (input)="search.set($any($event.target).value)"
+/>
+
+<p class="count">{{ visibleEvents().length }} of {{ events().length }} events</p>
+
+@if (lastInterest(); as title) {
+  <p class="note">You are interested in: {{ title }}</p>
+}
+
+<div class="grid">
+  @for (event of visibleEvents(); track event.id) {
+    <app-event-card [event]="event" (interested)="onInterested($event)" />
+  } @empty {
+    <p>No events match your search.</p>
+  }
+</div>

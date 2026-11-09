@@ -1,0 +1,21 @@
+.card {
+  padding: 1rem 1.25rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: white;
+}
+.date {
+  margin: 0;
+  color: #0a4a96;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+h2 {
+  margin: 0.25rem 0;
+  font-size: 1.25rem;
+}
+.meta {
+  margin: 0;
+  color: #666;
+  font-size: 0.875rem;
+}

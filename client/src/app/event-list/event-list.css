@@ -1,0 +1,18 @@
+input {
+  width: 100%;
+  max-width: 24rem;
+  padding: 0.5rem 0.75rem;
+  font: inherit;
+}
+.count {
+  color: #666;
+}
+.note {
+  padding: 0.5rem 0.75rem;
+  background: #edf2f9;
+}
+.grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+}
